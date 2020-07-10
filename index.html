@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <link rel="apple-touch-icon" href="favicon.png">
+        <link rel="Shortcut Icon" href="favicon.png" type="image/x-icon">
+        <title>自由落体运动</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <p>横向系数：<input id="hp" type="text" value="0.1" /> (0-1)</p>
+        <p>纵向系数：<input id="vp" type="text" value="0.6" /> (0-1)</p>
+        <p>速度：<input id="sp" type="text" value="30" />(20-1000)
+        <input type="button" value="demo" onclick="demo(document.getElementById('hp').value, document.getElementById('vp').value, document.getElementById('sp').value)" /></p>
+        <div style="margin-left:600px;">
+            <div id="fall" style="width:30px; height:30px; background:#f90; position:relative; right:0px; bottom:40px"></div>
+        </div>
+        <script type="text/javascript">
+            //https://wenku.baidu.com/view/a83944d5b1717fd5360cba1aa8114431b80d8e6d.html
+            var i = null;
+            function demo(hp, vp, sp) {
+                var f = document.getElementById('fall');
+                f.style.right = '0px';
+                f.style.bottom = '40px';
+                i && clearInterval(i);
+                var h = 1,
+                    v = 1,  
+                    hp = (hp > 0 && hp < 1) ? hp : 0.2,
+                    vp = (vp > 0 && vp < 1) ? vp : 0.5,
+                    sp = (sp > 20 || sp < 1000) ? sp : 30;
+                i = setInterval(function () {
+                    var r = parseInt(f.style.right) + h, b = parseInt(f.style.bottom) - v;
+                    f.style.right = r + 'px';
+                    f.style.bottom = b + 'px';
+                    if (r > 1000) {
+                        clearInterval(i);
+                    }
+                    if (b > -210) {
+                        v += 2;
+                    } else {
+                        h = (v > 0) ? v * hp : 0;
+                        v *= (v > 0) ? -1 * vp : 0;
+                        if(h ===0 && v===0) {
+                            clearInterval(i);
+                        }
+                    }
+                }, sp);
+            }
+            
+            function goFall() {
+                var test = new Object();
+            }
+        </script>
+
+    </body>
+</html>
